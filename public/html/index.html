@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Log</title>
+    
+</head>
+<body>
+    <h2>-------Log Files --------</h2>
+    <div class="file">
+        <div class="lines" id="lines"></div>
+    </div>
+</body>
+<script>
+    const connection = new WebSocket('ws://localhost:3000')
+
+    connection.onopen= () =>{
+        // console.log("sent hello world");
+        connection.send("hello wtorld");
+    }
+
+    connection.onmessage = msg=> {
+        console.log("onmessage")
+        lines=JSON.parse(msg.data);
+        console.log(lines);
+        lines.lines.forEach(line =>{
+            const div=document.createElement("div");
+            div.textContent=line;
+            document.getElementById("lines").append(div);
+        })
+
+       }
+</script>
+</html>
+
